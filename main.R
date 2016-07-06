@@ -26,6 +26,10 @@ rs <- randomForest(x = train[,],y = classes)
 #visualizing random forest variables by importance
 varImpPlot(rs)
 
+#getting desicion forest structure
+getTree(rs)
+
+
 #getting predictions on a test sample
 predictions <- predict(rs, test[,])
 
