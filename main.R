@@ -1,26 +1,39 @@
-setwd("/home/user/genotek_repo/")
+#adding required libraries
+
 library(bigmemory)
 library(biganalytics)
 library(bigpca)
 library(gbm)
 library(randomForest)
+
+#reading train and test data from the source
 train <- read.big.matrix(file.path("Learning_sample.txt"), type="integer", sep = " ")
 test <- read.big.matrix(file.path("Test_sample.txt"), type="integer", sep = " ")
 
+#transpose big matrices
 train <- big.t(train,verbose=TRUE)
 test <- big.t(test,verbose=TRUE)
 
-
+#using clustering to understang, what classes is provided by the source data
 cl <- bigkmeans(train, centers = 2, iter.max = 10, nstart = 1, dist = "euclid")
 
+#getting clases vector
 classes <- cl$cluster
 
-#colnames(train) <- paste("V",1:260121,sep = "")
+#using train matrix and classes vector to train random forest 
+rs <- randomForest(x = as.character(train[,]),y = classes)
 
-rs <- randomForest(x = train[,],y = classes)
+#visualizing random forest variables by importance
+varImpPlot(rs)
 
 
-#library(FactoMineR)
-#cah.test <- HCPC(x, graph=FALSE, nb.clust=-1)
+#getting predictions on the test sample
+predictions <- predict(rs, test)
+
+#getting predictions on a test sample
+predictions <- predict(rs, test[,])
+
+#
+
 
  
