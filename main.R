@@ -33,6 +33,8 @@ getTree(rs)
 #getting predictions on a test sample
 predictions <- predict(rs, test[,])
 
+round(predictions)
+
 #I got big bias in test prediction results, that's might be because of i didn't specify random forest to serve this 
 # data only as cathegorial. 
 
