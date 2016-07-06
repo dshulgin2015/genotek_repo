@@ -21,19 +21,16 @@ cl <- bigkmeans(train, centers = 2, iter.max = 10, nstart = 1, dist = "euclid")
 classes <- cl$cluster
 
 #using train matrix and classes vector to train random forest 
-rs <- randomForest(x = as.character(train[,]),y = classes)
+rs <- randomForest(x = train[,],y = classes)
 
 #visualizing random forest variables by importance
 varImpPlot(rs)
 
-
-#getting predictions on the test sample
-predictions <- predict(rs, test)
-
 #getting predictions on a test sample
 predictions <- predict(rs, test[,])
 
-#
+#I got big bias in test prediction results, that's might be because of i didn't specify random forest to serve this 
+# data only as cathegorial. 
 
 
  
